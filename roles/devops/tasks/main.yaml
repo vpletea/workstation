@@ -1,0 +1,65 @@
+- name: Add kubectl signing key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+- name: Add kubectl repository
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+- name: Add helm signing key
+  apt_key:
+    url: https://baltocdn.com/helm/signing.asc
+    state: present
+- name: Add helm repository
+  apt_repository:
+    repo: deb https://baltocdn.com/helm/stable/debian/ all main
+    state: present
+- name: Add terraform signing key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+- name: Add terraform repository
+  apt_repository:
+    repo: deb https://apt.releases.hashicorp.com {{ ansible_distribution_release | lower }} main
+    state: present
+- name: Add docker signing key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: Add docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present 
+- name: Download k3d
+  get_url:
+    url: https://raw.githubusercontent.com/rancher/k3d/main/install.sh
+    dest: /tmp/install.sh
+    mode: 0755
+- name: Install k3d
+  shell: |
+    cat /tmp/install.sh | bash
+- name: Create kube config directory
+  file:
+    path: /home/valentin/.kube/
+    state: directory
+    owner: valentin
+    mode: 0700  
+- name: Upgrade all  apt packages
+  apt: upgrade=dist force_apt_get=yes    
+- name: Install devops software
+  apt:
+    pkg:
+      - kubectl
+      - helm
+      - terraform
+      - libnss-myhostname
+      - docker-ce
+- name: Configure git parameters
+  shell: |
+    git config --system core.autocrlf true
+    git config --system core.longpaths true
+- name: Add user to docker group
+  user:
+    name: valentin
+    groups: docker
+    append: yes

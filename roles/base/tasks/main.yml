@@ -1,0 +1,73 @@
+- name: Remove unwanted software
+  apt:
+    pkg:
+    - gnome-contacts
+    - geary
+    - totem
+    - gedit
+    - simple-scan
+    - ibus-libpinyin
+    - evince
+    - language-pack-ar-base
+    - language-pack-ar 
+    - language-pack-de-base
+    - language-pack-de 
+    - language-pack-fr-base 
+    - language-pack-fr 
+    - language-pack-es-base 
+    - language-pack-es 
+    - language-pack-it-base 
+    - language-pack-it 
+    - language-pack-ja-base 
+    - language-pack-ja -
+    - language-pack-ru-base 
+    - language-pack-ru 
+    - language-pack-pt-base 
+    - language-pack-pt 
+    - language-pack-zh-base
+    - language-pack-zh
+    - language-pack-gnome-zh-hans-base
+    - language-pack-gnome-zh-hans
+    - language-pack-gnome-zh-hant-base 
+    - language-pack-gnome-zh-hant
+    - language-pack-zh-hans-base
+    - language-pack-zh-hant-base
+    - firefox-locale-ar
+    - firefox-locale-de 
+    - firefox-locale-es 
+    - firefox-locale-en 
+    - firefox-locale-fr 
+    - firefox-locale-it 
+    - firefox-locale-ja 
+    - firefox-locale-pt 
+    - firefox-locale-ru 
+    - firefox-locale-zh-hans 
+    - firefox-locale-zh-hant
+    state: absent
+- name: Remove useless packages from the cache
+  apt:
+   autoclean: yes
+- name: Remove dependencies that are no longer required
+  apt:
+   autoremove: yes
+- name: Install my software
+  apt:
+    pkg:
+      - apt-transport-https
+      - gnupg2
+      - ca-certificates
+      - curl
+      - lsb-release
+      - tlp
+      - wine
+      - code
+      - dos2unix
+      - google-chrome-stable
+      - sshpass
+      - yubioath-desktop
+    update_cache: yes
+- name: Enable the firewall
+  ufw:
+    state: enabled
+- name: Upgrade all  apt packages
+  apt: upgrade=dist force_apt_get=yes

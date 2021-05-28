@@ -1,0 +1,13 @@
+- name: Configure tlp
+  copy:
+    src: tlp.conf
+    dest: /etc/tlp.conf
+    force: yes
+- name: Enable service tlp
+  service:
+    name: tlp
+    enabled: yes
+- name: Start service tlp
+  service:
+    name: tlp
+    state: started

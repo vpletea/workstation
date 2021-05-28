@@ -1,0 +1,8 @@
+- name: Copy .bashrc
+  ansible.builtin.copy:
+    src: .bashrc
+    dest: ~/.bashrc
+    force: yes
+- name: Convert .bashrc to unix format
+  shell: |
+    dos2unix ~/.bashrc

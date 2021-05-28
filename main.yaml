@@ -1,0 +1,21 @@
+# Main setup using root privileges
+- hosts: localhost
+  connection: local
+  become: true
+  pre_tasks:
+    - name: Update repositories index
+      tags: always
+      apt:
+        update_cache: yes
+      changed_when: false
+  roles:
+    - base
+    - devops
+    - extras
+    - tlp
+    
+# Setup bash prompt for regular user    
+- hosts: localhost
+  connection: local
+  roles:
+    - extras
