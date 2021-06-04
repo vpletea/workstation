@@ -1,6 +1,6 @@
 # Howto
 
-* Clone the repo: git clone https://github.com/vpletea/workstation.git && cd workstation
+* Clone the repo: git clone https://github.com/vpletea/setup.git && cd setup
 * Install ansible: make ansible
 * Configure the workstation: make workstation
 
